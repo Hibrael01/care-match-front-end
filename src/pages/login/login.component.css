@@ -1,0 +1,87 @@
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 90vh;
+}
+
+#form-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-field-basic{
+    width: 100%;
+}
+
+#login-card {
+    width: 90%;
+}
+
+#login-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+}
+
+.btnLoginField {
+    width: 300px;
+}
+
+#loginButton {
+    margin-bottom: 10px;
+}
+
+#forgotPasswordButton{
+    margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 720px) {
+    #login-container{
+        display: flex;
+        justify-content: center;
+    }
+
+    #login-card {
+        width: 650px;
+    }
+
+    #login-buttons {
+        display: flex; 
+        justify-content: center;
+        flex-direction: row; 
+        margin-top: 10px; 
+        width: 100%;
+    }
+
+    .btnLoginField {
+        width: 50%;
+    }
+
+    .form-field-basic{
+        width: 90%;
+    }
+
+    #loginButton {
+        margin-bottom: 0px;
+        margin-right: 10px;
+    }
+    
+    #forgotPasswordButton{
+        margin-bottom: 0px;
+        margin-right: 10px;
+        width: 320px;
+    }
+
+    #registerButon{
+        width: 320px;
+    }
+    
+}
+

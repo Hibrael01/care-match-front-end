@@ -1,0 +1,28 @@
+<mat-drawer-container id="home-container" [hasBackdrop]="true">
+    <mat-drawer id="drawer" #drawer [mode]="'push'">
+        <div id="user-details-section">
+            <app-sidenav-menu-cuidador *ngIf="usuario.tipoUsuario === 'CUIDADOR'"></app-sidenav-menu-cuidador>
+            <app-sidenav-menu-procurador *ngIf="usuario.tipoUsuario === 'PROCURADOR'"></app-sidenav-menu-procurador>
+        </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <div id="container-header">
+            <mat-toolbar id="toolbar" color="primary">
+                <div id="btn-navbar">
+                    <button mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </div>
+                <div id="title">
+                    <span>Care-Match</span>
+                </div>
+            </mat-toolbar>
+        </div>
+
+        <div id="container-content">
+            <app-home-content-cuidador *ngIf="usuario.tipoUsuario === 'CUIDADOR'"></app-home-content-cuidador>
+            <app-home-content-procurador *ngIf="usuario.tipoUsuario === 'PROCURADOR'"></app-home-content-procurador>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

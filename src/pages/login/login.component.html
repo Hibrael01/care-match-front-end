@@ -1,0 +1,48 @@
+<div id="login-container">
+
+    <mat-card id="login-card">
+        <mat-card-header style="display: flex; justify-content: center; align-items: center;">
+            <mat-card-title style="margin-right: 10px;">Care-Match</mat-card-title>
+            <img src="https://cdn-icons-png.flaticon.com/512/2925/2925697.png" width="50px" height="50px">
+        </mat-card-header>
+
+        <mat-card-content style="margin-top: 10px;">
+            <form [formGroup]="infoLogin" id="form-login">
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Login</mat-label>
+                    <input matInput placeholder="Login" formControlName="login" required type="text" maxlength="30" [(ngModel)]="usuario.login">
+                </mat-form-field>
+                
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Senha</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required maxlength="60" [(ngModel)]="usuario.senha">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <div id="login-buttons">
+                    <button id="loginButton" class="btnLoginField" mat-raised-button color="primary" (click)="realizarLogin()">
+                        Login
+                        <mat-icon>login</mat-icon>
+                    </button>
+
+                    <button id="forgotPasswordButton" class="btnLoginField" mat-raised-button color="accent" (click)="openRecoverPasswordDialog()">
+                        Esqueceu a Senha?
+                        <mat-icon>sync_lock</mat-icon>
+                    </button>
+
+                    <button id="registerButon" class="btnLoginField" mat-raised-button color="warn" (click)="redirect('register')">
+                        Crie sua Conta
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-footer style="display: flex; justify-content: center; font-size: 0.8em; color: gray;">
+            <span>Todos os direitos reservados &copy;</span>
+        </mat-card-footer>
+    </mat-card>
+
+</div>

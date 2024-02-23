@@ -1,0 +1,59 @@
+#home-container {  
+    width: 100vw;
+    height: 100vh;
+}
+
+#drawer-content{
+    width: 100%;
+    height: 100%;
+}  
+
+#container-header {
+    width: 100%;
+    height: 6%;
+}
+
+#container-content {
+    width: 100%;
+    height: 94%;
+}
+
+#toolbar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#btn-navbar {
+    display: flex;
+    align-items: center;
+}
+
+#title {
+    flex-grow: 1;
+    text-align: center;
+}
+
+#drawer {
+    width: 70%;
+    background-color: #ffffff;
+    color: #555555e0;
+}
+
+#user-details-section {
+    width: 100%;
+    color: #555555e0;
+}
+
+@media only screen and (min-width: 720px) {
+    #drawer{
+        width: 20%;
+    }
+
+    #container-content {
+        width: 100%;
+        height: 90%;
+    }
+}

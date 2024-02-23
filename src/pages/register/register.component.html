@@ -1,0 +1,101 @@
+<ng-container [ngSwitch]="stepperOrientation | async">
+    <div *ngSwitchCase="'horizontal'"></div>
+    <div *ngSwitchCase="'vertical'"></div>
+</ng-container>
+<div id="basic-register-container">
+    <mat-stepper class="basic-register-stepper" [orientation]="(stepperOrientation | async)!" [linear]="false">
+        <mat-step [stepControl]="dadosPessoais" label="Dados Pessoais" state="dadosPessoais">
+            <form [formGroup]="dadosPessoais">
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Nome</mat-label>
+                    <input matInput placeholder="Nome" formControlName="nome" required type="text" maxlength="60" [(ngModel)]="usuario.nome">
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Sobrenome</mat-label>
+                    <input matInput placeholder="Sobrenome" formControlName="sobrenome" required type="text" maxlength="90" [(ngModel)]="usuario.sobrenome">
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Dt. Nascimento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dtNascimento" name="dtNascimento"
+                    (click)="picker.open()" [(ngModel)]="usuario.dtNascimento">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="{{isCalendarTouchUI}}" #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Telefone</mat-label>
+                    <input matInput placeholder="(99) 9 9999-9999" formControlName="telefone" 
+                    required type="tel" maxlength="20" mask="(00) 0 0000-0000" prefix="+55" [(ngModel)]="usuario.telefone">
+                </mat-form-field>
+                <div class="buttons-section">
+                    <button mat-raised-button color="primary" (click)="redirect('')">
+                        Tela Inicial
+                        <mat-icon>home</mat-icon>
+                    </button>
+
+                    <button mat-raised-button color="primary" matStepperNext>
+                        Avançar
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="infoLogin" label="Informações de Login" state="infoLogin">
+            <form [formGroup]="infoLogin">
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Login</mat-label>
+                    <input matInput placeholder="Login" formControlName="login" required type="text" maxlength="30" [(ngModel)]="usuario.login">
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Senha</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required maxlength="60" [(ngModel)]="usuario.senha">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Esconder senha'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Tipo de Usuário</mat-label>
+                    <mat-select [(value)]="usuario.tipoUsuario" formControlName="tipoUsuario" required>
+                        <mat-option value="CUIDADOR">Cuidador</mat-option>
+                        <mat-option value="PROCURADOR">Procurador</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="exemplo@gmail.com" formControlName="email" required type="email" maxlength="90" [(ngModel)]="usuario.email">
+                    <mat-error *ngIf="infoLogin.get('email')?.invalid">{{getEmailErrorMessage()}}</mat-error>
+                </mat-form-field>
+
+                <div class="buttons-section">
+
+                    <button mat-raised-button color="primary" (click)="registrarNovoUsuario()">
+                        Concluir Cadastro
+                        <mat-icon>done</mat-icon>
+                    </button>
+
+                    <button mat-raised-button color="accent" matStepperPrevious>
+                        Voltar
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                </div>
+
+            </form>
+        </mat-step>
+
+
+        <!--Configuração de ícones-->
+        <ng-template matStepperIcon="dadosPessoais">
+            <mat-icon>person</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="infoLogin">
+            <mat-icon>login</mat-icon>
+        </ng-template>
+    </mat-stepper>
+</div>

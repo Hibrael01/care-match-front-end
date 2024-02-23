@@ -1,0 +1,35 @@
+<span class="sidenav-item" style="margin-top: 20px;">
+    <mat-icon class="sidenav-icon" fontIcon="person"></mat-icon>
+    <span>Bem vindo, {{usuario.nome}}!</span>
+</span>  
+
+
+<mat-divider class="sidenav-divider"></mat-divider>
+<div style="height: 40px;"></div>
+
+<span class="sidenav-item" (click)="redirect('conta/cuidador')">
+    <mat-icon class="sidenav-icon" fontIcon="account_circle"></mat-icon>
+    <span>Minha conta</span>
+</span>  
+
+<span class="sidenav-item" (click)="redirect('conexoes/cuidador')">
+    <mat-icon class="sidenav-icon" fontIcon="contacts"></mat-icon>
+    <span>Minhas Conexões</span>
+</span>
+
+<span class="sidenav-item" (click)="redirect('solicitacoes/cuidador')">
+    <mat-icon class="sidenav-icon" fontIcon="list_alt"></mat-icon>
+    <span>Solicitações Recebidas</span>
+</span>
+
+<mat-divider class="sidenav-divider"></mat-divider>
+<div style="height: 40px;"></div>
+<span class="sidenav-item" (click)="redirect('configuracao')">
+    <mat-icon class="sidenav-icon" fontIcon="settings"></mat-icon>
+    <span>Configurações</span>
+</span>  
+
+<span class="sidenav-item" (click)="doLogout()">
+    <mat-icon class="sidenav-icon" fontIcon="logout"></mat-icon>
+    <span>Sair</span>
+</span>  
