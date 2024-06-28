@@ -1,1 +1,350 @@
-<p>finalizar-cadastro-cuidador works!</p>
+<ng-container [ngSwitch]="stepperOrientation | async">
+    <div *ngSwitchCase="'horizontal'"></div>
+    <div *ngSwitchCase="'vertical'"></div>
+</ng-container>
+
+<div id="container-stepper">
+    <mat-stepper class="basic-register-stepper" [orientation]="(stepperOrientation | async)!" [linear]="false">
+        <mat-step [stepControl]="infoCuidador" label="Informações Cuidador" state="infoCuidador">
+            <form [formGroup]="infoCuidador">
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Tempo Experiência</mat-label>
+                    <input matInput placeholder="Tempo de Experiência" formControlName="tempoExp" required type="number" min="0" max="99" [(ngModel)]="cuidador.tempoExp">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Unidade</mat-label>
+                    <mat-select [(value)]="cuidador.unidadeTempo" name="unidadeTempo" formControlName="unidadeTempo">
+                        <mat-option *ngFor="let option of unidadeTempoOptions" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Formação</mat-label>
+                    <mat-select [(value)]="cuidador.formacao" name="formacao" formControlName="formacao"> 
+                        <mat-option *ngFor="let option of formacaoOptions" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Você atende de casa?</mat-label>
+                    <mat-select [(value)]="cuidador.atendeCasa" name="atendeCasa" formControlName="atendeCasa">
+                        <mat-option value="S">Sim</mat-option>
+                        <mat-option value="N">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Descrição</mat-label>
+                    <textarea class="desc-field" matInput required name="descricaoCuidador" formControlName="descricaoCuidador" placeholder="Faça uma breve descrição sobre você." 
+                    maxlength="200" [(ngModel)]="cuidador.descricao"></textarea>
+                </mat-form-field>
+    
+                <div class="stepper-buttons-section">
+                    <button mat-raised-button color="primary" matStepperNext>
+                        Avançar
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="enderecoCuidador" label="Endereço" state="enderecoCuidador">
+            <form [formGroup]="enderecoCuidador">
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Logradouro</mat-label>
+                    <input matInput placeholder="Logradouro" formControlName="logradouro" required type="text" maxlength="100" [(ngModel)]="cuidador.enderecoCuidador.logradouro">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Bairro</mat-label>
+                    <input matInput placeholder="Bairro" formControlName="bairro" required type="text" maxlength="100" [(ngModel)]="cuidador.enderecoCuidador.bairro">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Complemento</mat-label>
+                    <input matInput placeholder="Complemento" formControlName="complemento" required type="text" maxlength="100" [(ngModel)]="cuidador.enderecoCuidador.complemento">
+                </mat-form-field>
+                
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Cidade</mat-label>
+                    <mat-select [(value)]="cuidador.enderecoCuidador.cidade">
+                        <mat-option *ngFor="let cidade of cidades" [value]="cidade">
+                            {{cidade.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>CEP</mat-label>
+                    <input matInput placeholder="CEP" formControlName="cep" required type="text" maxlength="9" [(ngModel)]="cuidador.enderecoCuidador.cep">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>O Local é acessível?</mat-label>
+                    <mat-select [(value)]="cuidador.enderecoCuidador.acessivel" name="acessivel" formControlName="acessivel">
+                        <mat-option value="S">Sim</mat-option>
+                        <mat-option value="N">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <div class="stepper-buttons-section">
+                    <button mat-raised-button color="accent" matStepperPrevious>
+                        Voltar
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+    
+                    <button mat-raised-button color="primary" matStepperNext (click)="teste()">
+                        Avançar
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="disponibilidadeCuidador" label="Disponibilidade" state="disponibilidadeCuidador">
+            <form [formGroup]="disponibilidadeCuidador">
+                
+                <mat-label>Segunda-Feira</mat-label> 
+                <div id="sectionSegunda">
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaInicioSeg" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[0].horaInicial">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Fim</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaFimSeg" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[0].horaFinal">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-basic">
+                        <mat-label>Dia Inteiro</mat-label>
+                        <mat-select [(value)]="cuidador.lstDisponibilidade[0].diaInteiro" name="diaInteiroSeg" formControlName="diaInteiroSeg">
+                            <mat-option value="S">Sim</mat-option>
+                            <mat-option value="N">Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <mat-label>Terça-Feira</mat-label> 
+                <div id="sectionTerca">
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaInicioTer" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[1].horaInicial">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Fim</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaFimTer" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[1].horaFinal">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-basic">
+                        <mat-label>Dia Inteiro</mat-label>
+                        <mat-select [(value)]="cuidador.lstDisponibilidade[1].diaInteiro" name="diaInteiroTer" formControlName="diaInteiroTer">
+                            <mat-option value="S">Sim</mat-option>
+                            <mat-option value="N">Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <mat-label>Quarta-Feira</mat-label> 
+                <div id="sectionQuarta">
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaInicioQua" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[2].horaInicial">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Fim</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaFimQua" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[2].horaFinal">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-basic">
+                        <mat-label>Dia Inteiro</mat-label>
+                        <mat-select [(value)]="cuidador.lstDisponibilidade[2].diaInteiro" name="diaInteiroQua" formControlName="diaInteiroQua">
+                            <mat-option value="S">Sim</mat-option>
+                            <mat-option value="N">Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <mat-label>Quinta-Feira</mat-label> 
+                <div id="sectionQuinta">
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaInicioQui" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[3].horaInicial">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Fim</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaFimQui" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[3].horaFinal">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-basic">
+                        <mat-label>Dia Inteiro</mat-label>
+                        <mat-select [(value)]="cuidador.lstDisponibilidade[3].diaInteiro" name="diaInteiroQui" formControlName="diaInteiroQui">
+                            <mat-option value="S">Sim</mat-option>
+                            <mat-option value="N">Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <mat-label>Sexta-Feira</mat-label> 
+                <div id="sectionSexta">
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaInicioSex" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[4].horaInicial">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-time">
+                        <mat-label>Hora Fim</mat-label>
+                        <input matInput placeholder="Hora Inicio" formControlName="horaFimSex" required type="time" [(ngModel)]="cuidador.lstDisponibilidade[4].horaFinal">
+                    </mat-form-field>
+    
+                    <mat-form-field class="form-field-basic">
+                        <mat-label>Dia Inteiro</mat-label>
+                        <mat-select [(value)]="cuidador.lstDisponibilidade[4].diaInteiro" name="diaInteiroSex" formControlName="diaInteiroSex">
+                            <mat-option value="S">Sim</mat-option>
+                            <mat-option value="N">Não</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+    
+                <div class="stepper-buttons-section">
+                    <button mat-raised-button color="accent" matStepperPrevious>
+                        Voltar
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+    
+                    <button mat-raised-button color="primary" matStepperNext>
+                        Avançar
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="experienciaCuidador" label="Experiência" state="experienciaCuidador">
+            <form [formGroup]="experienciaCuidador">
+                <mat-label>Informe Uma Experiência</mat-label>
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Dt. Inicio</mat-label>
+                    <input matInput [matDatepicker]="pickerIni" formControlName="dtInicio" name="dtInicio"
+                    (click)="pickerIni.open()" [(ngModel)]="cuidadorXExperiencia.dataInicial">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerIni"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="{{isCalendarTouchUI}}" #pickerIni></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Dt. Final</mat-label>
+                    <input matInput [matDatepicker]="pickerFin" formControlName="dtFinal" name="dtFinal"
+                    (click)="pickerFin.open()" [(ngModel)]="cuidadorXExperiencia.dataFinal">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="{{isCalendarTouchUI}}" #pickerFin></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Descrição</mat-label>
+                    <textarea class="desc-field" matInput placeholder="Faça uma breve descrição sobre sua experiência!" 
+                        maxlength="200" [(ngModel)]="cuidadorXExperiencia.descricao" formControlName="descricao" name="descricao">
+                    </textarea>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Local</mat-label>
+                    <input matInput placeholder="Local" type="text" maxlength="80" [(ngModel)]="cuidadorXExperiencia.local" formControlName="local" name="local">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Qtd. Pessoas Atendidas</mat-label>
+                    <input matInput placeholder="Quantidade de pessoas atendidas" type="number" min="0" [(ngModel)]="cuidadorXExperiencia.qtdPessoas" 
+                    formControlName="qtdPessoas" name="qtdPessoas">
+                </mat-form-field>
+    
+                <div class="stepper-buttons-section">
+                    <button mat-raised-button color="accent" matStepperPrevious>
+                        Voltar
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button mat-raised-button color="primary" matStepperNext>
+                        Avançar
+                        <mat-icon>arrow_forward</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="certificadoCuidador" label="Certificados" state="certificadoCuidador">
+            <form [formGroup]="certificadoCuidador">
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Dt. Inicial</mat-label>
+                    <input matInput [matDatepicker]="pickerIniCert" formControlName="dtInicial" name="dtInicial"
+                    (click)="pickerIniCert.open()" [(ngModel)]="cuidadorXCertificado.dataInicial">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerIniCert"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="{{isCalendarTouchUI}}" #pickerIniCert></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Dt. Final</mat-label>
+                    <input matInput [matDatepicker]="pickerFinCert" formControlName="dtFinal" name="dtFinal"
+                    (click)="pickerFinCert.open()" [(ngModel)]="cuidadorXCertificado.dataFinal">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFinCert"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="{{isCalendarTouchUI}}" #pickerFinCert></mat-datepicker>
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Instituição</mat-label>
+                    <input matInput placeholder="Instituição" type="text" maxlength="200" [(ngModel)]="cuidadorXCertificado.instituicao" 
+                        formControlName="instituicao" name="instituicao">
+                </mat-form-field>
+    
+                <mat-form-field class="form-field-basic">
+                    <mat-label>Link do Certificado</mat-label>
+                    <input matInput placeholder="Informe o Link do seu Certificado" type="text" maxlength="200" [(ngModel)]="cuidadorXCertificado.linkCertificado" 
+                        formControlName="linkCertificado" name="linkCertificado">
+                </mat-form-field>
+                  
+                <div class="stepper-buttons-section">
+                    <button mat-raised-button color="accent" matStepperPrevious>
+                        Voltar
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+    
+                    <button mat-raised-button color="primary" (click)="finalizaCadastro()">
+                        Concluir
+                        <mat-icon>done</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+    
+    
+        <!--Configuração de ícones-->
+        <ng-template matStepperIcon="infoCuidador">
+            <mat-icon>assignment_ind</mat-icon>
+        </ng-template>
+    
+        <ng-template matStepperIcon="enderecoCuidador">
+            <mat-icon>home</mat-icon>
+        </ng-template>
+    
+        <ng-template matStepperIcon="disponibilidadeCuidador">
+            <mat-icon>schedule</mat-icon>
+        </ng-template>
+    
+        <ng-template matStepperIcon="experienciaCuidador">
+            <mat-icon>work</mat-icon>
+        </ng-template>
+    
+        <ng-template matStepperIcon="certificadoCuidador">
+            <mat-icon>workspace_premium</mat-icon>
+        </ng-template>
+    </mat-stepper>
+</div>

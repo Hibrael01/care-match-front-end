@@ -4,7 +4,8 @@ import { EnderecoCuidadorKey } from "./keys/enderecoCuidadorKey.model";
 
 export class EnderecoCuidador {
 
-    id !: EnderecoCuidadorKey;
+    idEndereco !: number;
+    idCuidador !: number;
     cuidador !: Cuidador;
     cidade !: Cidade;
     logradouro !: string;

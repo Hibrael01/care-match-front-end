@@ -43,18 +43,22 @@ import { HomeContentCuidadorComponent } from 'src/components/shared/home-content
 import { HomeContentProcuradorComponent } from 'src/components/shared/home-content-procurador/home-content-procurador.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FinalizarCadastroComponent } from 'src/pages/finalizar-cadastro/finalizar-cadastro.component';
+import { FinalizarCadastroCuidadorComponent } from 'src/components/shared/finalizar-cadastro-cuidador/finalizar-cadastro-cuidador.component';
+import { FinalizarCadastroProcuradorComponent } from 'src/components/shared/finalizar-cadastro-procurador/finalizar-cadastro-procurador.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [RootComponent, LoginComponent, RegisterComponent, HomeComponent, ConexoesCuidadorComponent,ContaCuidadorComponent,       
                  SolicitacoesCuidadorComponent, BuscaProcuradorComponent, ConexoesProcuradorComponent, ContaProcuradorComponent,
                  SolicitacoesProcuradorComponent, ConfiguracaoUsuarioComponent, SidenavMenuCuidadorComponent,
                  SidenavMenuProcuradorComponent, HomeContentCuidadorComponent, HomeContentProcuradorComponent,
-                 FinalizarCadastroComponent,],
+                 FinalizarCadastroComponent, FinalizarCadastroCuidadorComponent, FinalizarCadastroProcuradorComponent],
   imports: [CommonModule, FormsModule, BrowserModule, AppRouterModule, MatButtonModule, MatIconModule, MatStepperModule,
             NgSwitch, NgSwitchCase, ReactiveFormsModule, MatFormFieldModule, MatInputModule, AsyncPipe, BrowserAnimationsModule,
             MatDatepickerModule, MatNativeDateModule, NgxMaskDirective, MatSelectModule, HttpClientModule, MatSnackBarModule, 
             MatCardModule, MatDialogModule, MatToolbarModule, MatSidenavModule, MatDividerModule, MatExpansionModule,
-            MatListModule, MatGridListModule],
+            MatListModule, MatGridListModule, MatCheckboxModule, MatTableModule],
   providers: [{provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}}, 
               {
                 provide: MAT_DATE_LOCALE, 

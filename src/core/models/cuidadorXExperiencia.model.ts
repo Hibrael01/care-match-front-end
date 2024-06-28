@@ -3,7 +3,8 @@ import { CuidadorXExperienciaKey } from "./keys/cuidadorXExperienciaKey.model";
 
 export class CuidadorXExperiencia {
     
-    id !: CuidadorXExperienciaKey;
+    idExperiencia !: number;
+    idCuidador !: number;
     cuidador !: Cuidador;
     descricao !: string;
     dataInicial !: Date;

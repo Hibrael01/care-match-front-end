@@ -3,7 +3,8 @@ import { CuidadorXCertificadoKey } from "./keys/cuidadorXCertificadoKey,model";
 
 export class CuidadorXCertificado {
     
-    id !: CuidadorXCertificadoKey;
+    idCertificado !: number;
+    idCuidador !: number;
     cuidador !: Cuidador;
     instituicao !: string;
     dataInicial !: Date;

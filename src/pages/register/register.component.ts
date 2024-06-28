@@ -9,6 +9,7 @@ import { UserRegisterService } from 'src/core/services/user-register/user-regist
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RedirectService } from 'src/core/services/redirect/redirect.service';
+import { UserLoginService } from 'src/core/services/user-login/user-login.service';
 
 
 @Component({
@@ -43,7 +44,7 @@ export class RegisterComponent {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private registerService: UserRegisterService, private _snackBar: MatSnackBar, private _redirectService: RedirectService) {
+  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private registerService: UserRegisterService, private _snackBar: MatSnackBar, private _redirectService: RedirectService, private _loginService: UserLoginService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 720px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -79,8 +80,42 @@ export class RegisterComponent {
       
       if(res.idUsuario > 0){
         this._snackBar.open('Usuário Cadastrado com Sucesso!', '', {duration:3000});
+        this.usuario.idUsuario = res.idUsuario;
+        //Realiza Login para obter token de acesso para que possa realizar o cadastro
+        this.usuario.login = this.usuario.login.trim();
+        this._loginService.doLogin(this.usuario).subscribe(response => {
 
-        setTimeout(() => {this.redirect('')}, 1000);
+          if(response != null){
+
+            const token : string = response.token;
+    
+            this._loginService.setToken(token);
+            
+            //Salva os dados do usuário no LocalStorage para continuar o cadastro nas telas de finalizações
+            const usuarioInfo : Usuario = new Usuario();
+            usuarioInfo.idUsuario = this.usuario.idUsuario;
+            usuarioInfo.nome = this.usuario.nome;
+            usuarioInfo.sobrenome = this.usuario.sobrenome;
+            usuarioInfo.tipoUsuario = this.usuario.tipoUsuario
+            usuarioInfo.login = this.usuario.login;
+
+            console.log(usuarioInfo);
+            console.log(this.usuario);
+            
+            let userInfo : string = JSON.stringify(usuarioInfo);
+
+            if(userInfo != null && userInfo.length > 0){
+              localStorage.setItem('userInfo', userInfo);
+              this._redirectService.redirect('register/finalize')
+            }else{
+              this._snackBar.open('Não foi possível concluir o Cadastro. Tente novamente mais tarde!', '', {duration:3000});
+            }
+
+          }else{
+             this._snackBar.open('Não foi possível realizar o Login, verifique os dados!', '', {duration:3000});
+          }
+
+        })
 
       }else{
         this._snackBar.open('Não foi possível concluir o cadastro, verifique seus dados!', 'Ok')

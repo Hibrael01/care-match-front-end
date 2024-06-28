@@ -1,0 +1,36 @@
+#container-stepper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;    
+}
+
+.form-field-basic{
+    width: 100%;
+}
+
+.desc-field{                                     
+    height: 100px;
+}
+
+.form-field-time {
+    width: 45%;
+    margin-right: 10px;
+}
+
+.stepper-buttons-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (min-width: 767px) { 
+    .basic-register-stepper {
+        width: 75%;
+    }
+}
+
+@media only screen and (min-width: 1200px) { 
+    .basic-register-stepper {
+        width: 900px;
+    }
+}

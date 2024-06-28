@@ -11,6 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Usuario } from 'src/core/models/usuario.model';
 import { RedirectService } from 'src/core/services/redirect/redirect.service';
 import { UserLoginService } from 'src/core/services/user-login/user-login.service';
+import { UsuarioService } from 'src/core/services/usuario/usuario.service';
 
 export interface RecoverPasswordDialogData {
   recoverEmail : string;
@@ -34,7 +35,7 @@ export class LoginComponent {
     senha: ['', Validators.required],
   })
 
-  constructor(private _formBuilder: FormBuilder, private loginService: UserLoginService, private _snackBar: MatSnackBar, public recoverPasswordDialog: MatDialog, private _redirectService: RedirectService) {
+  constructor(private _formBuilder: FormBuilder, private loginService: UserLoginService, private _snackBar: MatSnackBar, public recoverPasswordDialog: MatDialog, private _redirectService: RedirectService, private _usuarioService: UsuarioService) {
 
   }
 
@@ -53,12 +54,34 @@ export class LoginComponent {
       }else{
          this._snackBar.open('Não foi possível realizar o Login, verifique os dados!', '', {duration:3000});
       }
-
+      this.gerarPerfilUsuario(this.usuario.login);
     }, error => {
         this._snackBar.open(error,'', {duration:3000})
     })
+
   }
 
+  private gerarPerfilUsuario(login: string) {
+    this._usuarioService.getUsuarioByLogin(login).subscribe(response => {
+
+      if(response != null) {
+        const usuarioInfo : Usuario = new Usuario();
+        usuarioInfo.idUsuario = response.idUsuario;
+        usuarioInfo.nome = response.nome;
+        usuarioInfo.sobrenome = response.sobrenome;
+        usuarioInfo.tipoUsuario = response.tipoUsuario;
+        usuarioInfo.login = response.login;
+
+        let userInfo : string = JSON.stringify(usuarioInfo);
+
+        if(userInfo != null && userInfo.length > 0){
+          localStorage.setItem('userInfo', userInfo);
+        }
+      }
+
+    })
+  }
+ 
   redirect(path: string) {
     this._redirectService.redirect(path);
   }

@@ -1,1 +1,4 @@
-<p>finalizar-cadastro works!</p>
+<div style="width: 100%; height: 100%;">
+    <app-finalizar-cadastro-cuidador *ngIf="usuario.tipoUsuario === 'CUIDADOR'"></app-finalizar-cadastro-cuidador>
+    <app-finalizar-cadastro-procurador *ngIf="usuario.tipoUsuario === 'PROCURADOR'"></app-finalizar-cadastro-procurador>
+</div>
